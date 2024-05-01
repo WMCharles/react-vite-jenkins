@@ -17,8 +17,8 @@ pipeline {
                 rm -rf node_modules
                 npm install
                 npm run build
-                sudo chown -R jenkins:jenkins ${HOME}
-                sudo touch ${HOME}/wafula.txt
+                chown -R jenkins:jenkins ${HOME}
+                touch ${HOME}/wafula.txt
                 echo "task complete"
                 '''
             }
