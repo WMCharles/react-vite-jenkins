@@ -26,7 +26,7 @@ pipeline {
                 echo 'Testing..'
                 sh '''
                 rm -rf /home/projects/react
-                cp -r dist /home/projects/react
+                cp -r dist /home/projects/
                 touch /home/projects/wafula.txt
                 '''
             }
