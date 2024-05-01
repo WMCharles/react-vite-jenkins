@@ -7,6 +7,7 @@ pipeline {
     }
     environment {
         HOME = '/var/www/html'
+        HOST_PROJECTS_DIR = '/home/projects'
     }
     stages {
         stage('Build') {
@@ -17,7 +18,7 @@ pipeline {
                 rm -rf node_modules
                 npm install
                 npm run build
-                touch ${HOME}/wafula.txt
+                touch ${HOST_PROJECTS_DIR}/wafula.txt
                 echo "task complete"
                 '''
             }
