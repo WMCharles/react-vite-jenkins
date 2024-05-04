@@ -26,12 +26,6 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh '''
-                pwd
-                cd /home/projects
-                pwd
-                ls
-                '''
             }
         }
 
@@ -47,10 +41,9 @@ pipeline {
 
     post {
         always {
-            // Move files from container to host
             script {
                 sh '''
-                cp -r /var/lib/jenkins/workspace/doctris/. /home/projects/react
+                cp -br ${WORKSPACE}/. /home/projects/react
                 '''
             }
         }
