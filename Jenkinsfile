@@ -49,7 +49,9 @@ pipeline {
         always {
             // Move files from container to host
             script {
-                sh 'cp -r /var/lib/jenkins/workspace/doctris/. /home/projects'
+                sh '''
+                cp -r /var/lib/jenkins/workspace/doctris/. /home/projects/react
+                '''
             }
         }
     }
