@@ -43,7 +43,7 @@ pipeline {
         always {
             script {
                 sh '''
-                cp -br ${WORKSPACE}/. /home/projects/react
+                cp -r ${WORKSPACE}/. /home/projects/react
                 '''
             }
         }
