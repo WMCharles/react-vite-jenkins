@@ -2,7 +2,8 @@ pipeline {
     agent {
         docker {
             image 'node:20-alpine'
-            args '-u root -v /home/projects:/home/projects'
+            // args '-u root -v /home/projects:/home/projects'
+            args '-u root -v /home/projects:/home/projects -v /var/www/html:/var/www/html'
         }
     }
     environment {
