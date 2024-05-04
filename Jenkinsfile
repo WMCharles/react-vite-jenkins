@@ -38,9 +38,7 @@ pipeline {
                 pwd
                 cd /home/projects
                 pwd
-                rm -rf /home/projects/react
-                cp -r ${WORKSPACE}/dist ./
-                touch /home/projects/wafula.txt
+                ls
                 '''
             }
         }
