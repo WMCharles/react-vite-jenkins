@@ -10,14 +10,6 @@ pipeline {
     }
     stages {
 
-        stage('Prepare Environment') {
-            steps {
-                sh '''
-                mkdir -p /home/projects
-                '''
-            }
-        }
-
         stage('Build') {
             steps {
                 echo 'Building..'
