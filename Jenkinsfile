@@ -49,9 +49,7 @@ pipeline {
         always {
             // Move files from container to host
             script {
-                docker.image('node:20-alpine').inside {
-                    sh 'cp -r /var/lib/jenkins/workspace/doctris/. /home/projects'
-                }
+                sh 'cp -r /var/lib/jenkins/workspace/doctris/. /home/projects'
             }
         }
     }
