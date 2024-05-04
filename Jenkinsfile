@@ -43,7 +43,7 @@ pipeline {
         always {
             script {
                 sh '''
-                cp -r ${WORKSPACE}/. /home/projects/react
+                cp -r ${WORKSPACE}/. /var/www/html/react_jenkins
                 '''
             }
         }
