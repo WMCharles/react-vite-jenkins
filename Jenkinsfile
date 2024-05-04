@@ -2,13 +2,22 @@ pipeline {
     agent {
         docker {
             image 'node:20-alpine'
-            args '-u root'
+            args '-u root -v /home/projects:/home/projects'
         }
     }
     environment {
         HOME = '/var/www/html'
     }
     stages {
+
+        stage('Prepare Environment') {
+            steps {
+                sh '''
+                mkdir -p /home/projects
+                '''
+            }
+        }
+
         stage('Build') {
             steps {
                 echo 'Building..'
@@ -21,6 +30,7 @@ pipeline {
                 '''
             }
         }
+
         stage('Test') {
             steps {
                 echo 'Testing..'
@@ -34,6 +44,7 @@ pipeline {
                 '''
             }
         }
+
         stage('Deliver') {
             steps {
                 echo 'Deliver....'
