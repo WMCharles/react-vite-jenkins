@@ -44,6 +44,8 @@ pipeline {
             script {
                 sh '''
                 cp -r ${WORKSPACE}/. /var/www/html/react_jenkins
+                cd /var/www/html/react_jenkins
+                ls
                 '''
             }
         }
