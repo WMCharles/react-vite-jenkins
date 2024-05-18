@@ -1,54 +1,53 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:20-alpine'
-            // args '-u root -v /home/projects:/home/projects'
-            args '-u root -v /home/projects:/home/projects -v /var/www/html:/var/www/html'
-        }
-    }
-    environment {
-        HOME = '/var/www/html'
-    }
-    stages {
+    agent any
 
+    environment {
+        REPO_URL = 'https://github.com/WMCharles/react-vite-jenkins.git'
+        BRANCH = 'main'
+        NODE_VERSION = '20'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: "${BRANCH}", url: "${REPO_URL}"
+            }
+        }
+        
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    // Ensure Node.js is installed
+                    def nodeExists = sh(script: 'node --version', returnStatus: true) == 0
+                    if (!nodeExists) {
+                        // Install Node.js using nvm
+                        sh 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash'
+                        sh '. ~/.nvm/nvm.sh && nvm install ${NODE_VERSION} && nvm use ${NODE_VERSION}'
+                    }
+                    // Install dependencies
+                    sh '. ~/.nvm/nvm.sh && npm install'
+                }
+            }
+        }
+        
         stage('Build') {
             steps {
-                echo 'Building..'
-                sh '''
-                rm -rf dist
-                rm -rf node_modules
-                npm install
-                npm run build
-                echo "task complete"
-                '''
+                script {
+                    sh '. ~/.nvm/nvm.sh && npm run build'
+                }
             }
         }
 
-        stage('Test') {
+        stage('Archive Artifacts') {
             steps {
-                echo 'Testing..'
-            }
-        }
-
-        stage('Deliver') {
-            steps {
-                echo 'Deliver....'
-                sh '''
-                echo "doing delivery stuff.."
-                '''
+                archiveArtifacts artifacts: 'build/**/*', allowEmptyArchive: false
             }
         }
     }
 
     post {
         always {
-            script {
-                sh '''
-                cp -r ${WORKSPACE}/. /var/www/html/react_jenkins
-                cd /var/www/html/react_jenkins
-                ls
-                '''
-            }
+            cleanWs()
         }
     }
 }
